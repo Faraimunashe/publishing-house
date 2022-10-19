@@ -21,6 +21,8 @@ Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->midd
 
 Route::group(['middleware' => ['auth', 'role:author']], function () {
     Route::get('/home', 'App\Http\Controllers\author\HomeController@index')->name('author-home');
+    Route::get('/books', 'App\Http\Controllers\author\BooksController@index')->name('author-books');
+    Route::get('/sales', 'App\Http\Controllers\author\SalesController@index')->name('author-sales');
 });
 
 

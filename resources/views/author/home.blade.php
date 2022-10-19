@@ -6,6 +6,7 @@
             <div class="col-md-9 mb-4">
                 <!--Section: Content-->
                 <section>
+                    <hr/>
                     <!-- Post -->
                     <div class="row">
                         <div class="col-md-4 mb-4">
@@ -29,7 +30,7 @@
                             <button type="button" class="btn btn-primary">Read</button>
                         </div>
                     </div>
-
+                    <hr/>
                     <!-- Post -->
                     <div class="row">
                         <div class="col-md-4 mb-4">
@@ -53,7 +54,7 @@
                         <button type="button" class="btn btn-primary">Read</button>
                         </div>
                     </div>
-
+                    <hr/>
                     <!-- Post -->
                     <div class="row">
                         <div class="col-md-4 mb-4">
@@ -77,7 +78,7 @@
                         <button type="button" class="btn btn-primary">Read</button>
                         </div>
                     </div>
-
+                    <hr/>
                     <!-- Post -->
                     <div class="row">
                         <div class="col-md-4 mb-4">
@@ -101,6 +102,7 @@
                         <button type="button" class="btn btn-primary">Read</button>
                         </div>
                     </div>
+                    <hr/>
                 </section>
                 <!--Section: Content-->
             </div>
@@ -126,8 +128,10 @@
                         500+ components, free templates, 1-min installation, extensive tutorial, huge
                         community. MIT license - free for personal & commercial use
                         </p>
-                        <a role="button" class="btn btn-primary" href="https://mdbootstrap.com/docs/standard/"
-                        target="_blank">Download for free<i class="fas fa-download ms-2"></i></a>
+                        <a role="button" class="btn btn-primary" href="https://mdbootstrap.com/docs/standard/" target="_blank">
+                            Download for free
+                            <i class="fas fa-download ms-2"></i>
+                        </a>
                     </section>
                     <!--Section: Ad-->
 
@@ -136,8 +140,7 @@
                         <h5 class="mb-4">Learn the newest Bootstrap 5</h5>
 
                         <div class="embed-responsive embed-responsive-16by9 shadow-4-strong">
-                        <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/c9B4TPnak1A"
-                            allowfullscreen></iframe>
+                            <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/c9B4TPnak1A" allowfullscreen></iframe>
                         </div>
                     </section>
                     <!--Section: Video-->

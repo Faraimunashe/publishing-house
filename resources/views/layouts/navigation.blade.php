@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <!-- Navbar brand -->
         <a class="navbar-brand" target="_blank" href="{{route('dashboard')}}">
-            <strong style="color: blue;">Publishing House</strong>
+            <strong style="color: rgb(5, 5, 67);">Publishing House</strong>
         </a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
             aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,10 +15,10 @@
                 </li>
                 @if (Auth::user()->hasRole('author'))
                     <li class="nav-item active">
-                        <a class="nav-link" href="#intro">Books</a>
+                        <a class="nav-link" href="{{ route('author-books') }}">Books</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#intro">Sales</a>
+                        <a class="nav-link" href="{{ route('author-sales') }}">Sales</a>
                     </li>
 
                 @elseif (Auth::user()->hasRole('publisher'))
@@ -42,9 +42,12 @@
                 </li>
 
                 <li class="nav-item me-3 me-lg-0 ml-3">
-                    <button class="btn btn-danger rounded-pill btn-sm" type="submit">
-                        <i class="bi bi-lock"></i>
-                    </button>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn btn-danger rounded-pill btn-sm" type="submit">
+                            <i class="bi bi-lock"></i>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>

@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $books = Book::where('status', 2)->get();
+        $books = Book::all();
         return view('publisher.dashboard', [
             'books' => $books
         ]);

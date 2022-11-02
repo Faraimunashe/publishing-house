@@ -34,7 +34,7 @@ class BookController extends Controller
             $book->status = $request->status;
             $book->save();
 
-            return redirect()->back()->with('error', 'Successfully updated book status');
+            return redirect()->back()->with('success', 'Successfully updated book status');
         }catch(Exception $e)
         {
             return redirect()->back()->with('error', 'ERROR: '.$e->getMessage());

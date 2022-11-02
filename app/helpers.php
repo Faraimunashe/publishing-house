@@ -58,6 +58,10 @@ function get_user($id){
     return User::find($id);
 }
 
+function get_book($book_id){
+    return Book::find($book_id);
+}
+
 function count_approved_books(){
     return Book::where('status', 1)->count();
 }
@@ -87,5 +91,20 @@ function get_status($num){
 }
 
 function count_user_book($user_id){
-    return Book::where('user_id', $user)->count();
+    return Book::where('user_id', $user_id)->count();
+}
+
+function is_author(){
+    $author = Author::where('user_id', Auth::id())->first();
+    if(is_null($author)){
+        return 0;
+    }else{
+        if($author->status == 0){
+            return 0;
+        }elseif($author->status == 1){
+            return 1;
+        }elseif($author->status == 2){
+            return 2;
+        }
+    }
 }

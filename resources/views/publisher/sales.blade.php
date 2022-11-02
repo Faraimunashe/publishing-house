@@ -41,7 +41,7 @@
                                     <div class="col-md-6">
                                         <h5 class="card-title">Sales</h5>
                                     </div>
-                                    <form action="#" method="POST">
+                                    <form action="{{route('admin-download-sales')}}" method="POST">
                                         @csrf
                                         <div class="col-md-6">
                                             <button type="submit" class="btn btn-success">Print Report</button>
@@ -69,10 +69,10 @@
                                                         <a href="#" class="dataTable-sorter">Status</a>
                                                     </th>
                                                     <th scope="col" data-sortable="">
-                                                        <a href="#" class="dataTable-sorter">Book</a>
+                                                        <a href="#" class="dataTable-sorter">User</a>
                                                     </th>
                                                     <th scope="col" data-sortable="">
-                                                        <a href="#" class="dataTable-sorter">Created At</a>
+                                                        <a href="#" class="dataTable-sorter">Book</a>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -96,10 +96,10 @@
                                                             <span class="badge bg-{{$status->badge}}">{{$status->label}}</span>
                                                         </td>
                                                         <td>
-                                                            {{get_book($sale->book_id)->title}}
+                                                            {{get_user($sale->user_id)->name}}
                                                         </td>
                                                         <td>
-                                                            {{$sale->created_at}}
+                                                            {{get_book($sale->book_id)->title}}
                                                         </td>
                                                     </tr>
                                                 @endforeach

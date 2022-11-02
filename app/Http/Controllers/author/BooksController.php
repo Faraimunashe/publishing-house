@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\author;
 
 use App\Http\Controllers\Controller;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Comment;
 use App\Models\Liked;
@@ -41,7 +42,7 @@ class BooksController extends Controller
             $book->document = $docName;//book file
             $book->price = $request->price;
             $book->cover = $imageName;//cover image;
-            $book->status = 0;
+            $book->status = 2;
             $book->description = $request->description;
             $book->title = $request->title;
             $book->save();
@@ -163,6 +164,22 @@ class BooksController extends Controller
         }catch(Exception $e){
             return redirect()->back()->with('error', 'ERROR: '.$e->getMessage());
         }
+    }
+
+    public function apply()
+    {
+        $author = Author::where('user_id', Auth::id())->first();
+        if(is_null($author)){
+            $author = new Author();
+            $author->user_id = Auth::id();
+            $author->reference = rand(111111111,999999999);
+            $author->status = 2;
+            $author->save();
+
+            return redirect()->back()->with('success', 'You successfully applied');
+        }
+
+        return redirect()->back()->with('error', 'You cannot apply at the moment!');
     }
 
 }

@@ -163,20 +163,47 @@
 
             <!--Grid column-->
             <div class="col-md-3 mb-4">
-                <section style="padding-top: 25px;">
-                    <div class="card recent-sales overflow-auto">
-                        <div class="card-header">
-                            New Publishment
-                        </div>
-                        <div class="card-body">
-                            <div class="row mt-3">
-                                <button class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#largeModal">
-                                    Add New
-                                </button>
+                @if (is_author() == 0)
+                    <section style="padding-top: 25px;">
+                        <div class="card recent-sales overflow-auto">
+                            <div class="card-header">
+                                Apply for authorship
+                            </div>
+                            <div class="card-body">
+                                <div class="row mt-3">
+                                    <a href="{{route('author-apply')}}" class="btn btn-primary btn-block">
+                                        Click here to apply
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                @elseif (is_author() == 1)
+                    <section style="padding-top: 25px;">
+                        <div class="card recent-sales overflow-auto">
+                            <div class="card-header">
+                                New Publishment
+                            </div>
+                            <div class="card-body">
+                                <div class="row mt-3">
+                                    <button class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#largeModal">
+                                        Add New
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                @elseif (is_author() == 2)
+                    <section style="padding-top: 25px;">
+                        <div class="card recent-sales overflow-auto">
+                            <div class="card-body">
+                                <div class="row mt-3">
+                                    Pending authorship approval
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                @endif
             </div>
             <!--Grid column-->
         </div>

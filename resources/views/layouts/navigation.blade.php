@@ -15,7 +15,7 @@
                 </li>
                 @if (Auth::user()->hasRole('author'))
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('author-books') }}">Books</a>
+                        <a class="nav-link" href="{{ route('author-books') }}">Authorship</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('author-sales') }}">Sales</a>
@@ -32,9 +32,8 @@
                         <a class="nav-link" href="{{route('admin-authors')}}">Authors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Sales</a>
+                        <a class="nav-link" href="{{route('admin-sales')}}">Sales</a>
                     </li>
-
                 @endif
             </ul>
 

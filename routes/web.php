@@ -32,6 +32,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/authors', 'App\Http\Controllers\publisher\AuthorController@index')->name('admin-authors');
     Route::post('/admin/edit-author', 'App\Http\Controllers\publisher\AuthorController@change')->name('admin-edit-author');
 
+    Route::get('/admin/sales', 'App\Http\Controllers\publisher\SaleController@index')->name('admin-sales');
+    Route::post('/admin/download-sales', 'App\Http\Controllers\publisher\SaleController@download')->name('admin-download-sales');
+
 });
 
 
@@ -48,6 +51,7 @@ Route::group(['middleware' => ['auth', 'role:author']], function () {
     Route::post('/like', 'App\Http\Controllers\author\BooksController@like')->name('author-like');
 
     Route::get('/sales', 'App\Http\Controllers\author\SalesController@index')->name('author-sales');
+    Route::get('/apply-authorship', 'App\Http\Controllers\author\BooksController@apply')->name('author-apply');
 });
 
 

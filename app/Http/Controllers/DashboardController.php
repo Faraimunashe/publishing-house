@@ -12,9 +12,9 @@ class DashboardController extends Controller
         if(Auth::user()->hasRole('author'))
         {
             return redirect()->route('author-home');
-        }elseif(Auth::user()->hasRole('publisher'))
+        }elseif(Auth::user()->hasRole('admin'))
         {
-            dd('coming soon');
+            return redirect()->route('admin-dashboard');
         }
     }
 }

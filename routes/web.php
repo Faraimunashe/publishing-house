@@ -19,6 +19,22 @@ Route::get('/', function () {
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->middleware(['auth'])->name('dashboard');
 
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::get('/admin/dashboard', 'App\Http\Controllers\publisher\DashboardController@index')->name('admin-dashboard');
+
+    Route::get('/admin/categories', 'App\Http\Controllers\publisher\CategoryController@index')->name('admin-categories');
+    Route::post('/admin/add-category', 'App\Http\Controllers\publisher\CategoryController@add')->name('admin-add-category');
+    Route::post('/admin/edit-category', 'App\Http\Controllers\publisher\CategoryController@edit')->name('admin-edit-category');
+
+    Route::get('/admin/books', 'App\Http\Controllers\publisher\BookController@index')->name('admin-books');
+    Route::post('/admin/edit-book', 'App\Http\Controllers\publisher\BookController@change')->name('admin-edit-book');
+
+    Route::get('/admin/authors', 'App\Http\Controllers\publisher\AuthorController@index')->name('admin-authors');
+    Route::post('/admin/edit-author', 'App\Http\Controllers\publisher\AuthorController@change')->name('admin-edit-author');
+
+});
+
+
 Route::group(['middleware' => ['auth', 'role:author']], function () {
     Route::get('/home', 'App\Http\Controllers\author\HomeController@index')->name('author-home');
 

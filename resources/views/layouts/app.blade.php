@@ -26,10 +26,14 @@
         <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
         <style>
             .footer {
-            position: fixed;
-            bottom: 0;
-        }
-    </style>
+                position: fixed;
+                bottom: 0;
+            }
+            #space {
+                margin-right: 80px;
+                margin-left: 80px;
+            }
+        </style>
 </head>
 <body>
       <!--Main Navigation-->

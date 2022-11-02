@@ -21,9 +21,15 @@
                         <a class="nav-link" href="{{ route('author-sales') }}">Sales</a>
                     </li>
 
-                @elseif (Auth::user()->hasRole('publisher'))
+                @elseif (Auth::user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a class="nav-link" href="">Authors</a>
+                        <a class="nav-link" href="{{route('admin-books')}}">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin-categories')}}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin-authors')}}">Authors</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="">Sales</a>

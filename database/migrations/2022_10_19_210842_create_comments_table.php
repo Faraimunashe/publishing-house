@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('book_id');
             $table->bigInteger('user_id');
-            $table->string('message', 600);
+            $table->text('message');
             $table->timestamps();
         });
     }

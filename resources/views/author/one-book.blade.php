@@ -3,6 +3,27 @@
         <div class="container">
             <!--Grid row-->
             <div class="row">
+                <div class="col-md-12">
+                    @if (Session::has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('error') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                 <!--Grid column-->
                 <div class="col-md-8 mb-4">
                 <!--Section: Post data-mdb-->
@@ -24,10 +45,15 @@
                             </div>
 
                             <div class="col-lg-6 text-center text-lg-end">
-                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #3b5998;">
-                                    <i class="bi bi-hand-thumbs-up"></i>
-                                    {{count_likes($book->id)}}
-                                </button>
+                                <form method="POST" action="{{route('author-like')}}">
+                                    @csrf
+                                    <input type="hidden" value="{{Auth::id()}}" name="userid" required>
+                                    <input type="hidden" value="{{$book->id}}" name="bookid" required>
+                                    <button type="submit" class="btn btn-primary px-3 me-1" style="background-color: #3b5998;">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                        {{count_likes($book->id)}}
+                                    </button>
+                                </form>
                                 <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #55acee;">
                                     <i class="bi bi-chat-right"></i>
                                     {{count_comments($book->id)}}

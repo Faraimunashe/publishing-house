@@ -7,9 +7,12 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Comment;
 use App\Models\Liked;
+use App\Models\Paynowlog;
+use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Response;
 
 class BooksController extends Controller
 {
@@ -108,19 +111,126 @@ class BooksController extends Controller
         ]);
     }
 
-    public function read($book_id)
+    public function download(Request $request)
     {
-        $book = Book::find($book_id);
+        $request->validate([
+            'book_id' => ['required', 'integer'],
+            'phone' => ['required', 'digits:10', 'starts_with:07']
+        ]);
+
+        $book = Book::find($request->book_id);
         if(is_null($book)){
             return redirect()->back()->with('error', 'Book was not found');
         }
 
-        $comments = Comment::where('book_id', $book->id)->get();
+        $wallet = "ecocash";
 
-        return view('author.document-view', [
-            'book' => $book,
-            'comments' => $comments
-        ]);
+        //get all data ready
+        $email = "faraimunashe.m11@gmail.com";
+        $phone = $request->phone;
+        $amount = $book->price;
+
+        /*determine type of wallet*/
+        if (strpos($phone, '071') === 0) {
+            $wallet = "onemoney";
+        }
+
+        $paynow = new \Paynow\Payments\Paynow(
+            "11336",
+            "1f4b3900-70ee-4e4c-9df9-4a44490833b6",
+            route('author-download-book'),
+            route('author-download-book'),
+        );
+
+        // Create Payments
+        $invoice_name = "publishing-hub-" . time();
+        $payment = $paynow->createPayment($invoice_name, $email);
+
+        $payment->add("Buy Book", $amount);
+
+        $response = $paynow->sendMobile($payment, $phone, $wallet);
+
+
+        // Check transaction success
+        if ($response->success()) {
+
+            $timeout = 9;
+            $count = 0;
+
+            while (true) {
+                sleep(3);
+                // Get the status of the transaction
+                // Get transaction poll URL
+                $pollUrl = $response->pollUrl();
+                $status = $paynow->pollTransaction($pollUrl);
+
+
+                //Check if paid
+                if ($status->paid()) {
+                    // Yay! Transaction was paid for
+                    // You can update transaction status here
+                    // Then route to a payment successful
+                    $info = $status->data();
+
+                    $paynowdb = new Paynowlog();
+                    $paynowdb->reference = $info['reference'];
+                    $paynowdb->paynow_reference = $info['paynowreference'];
+                    $paynowdb->amount = $info['amount'];
+                    $paynowdb->status = $info['status'];
+                    $paynowdb->poll_url = $info['pollurl'];
+                    $paynowdb->hash = $info['hash'];
+                    $paynowdb->save();
+
+                    //transaction update
+                    $trans = new Transaction();
+                    $trans->user_id = Auth::id();
+                    $trans->book_id = $request->book_id;
+                    $trans->reference = $info['paynowreference'];
+                    $trans->method = "paynow";
+                    $trans->amount = $info['amount'];
+                    $trans->status = 1;
+                    $trans->save();
+
+                    $filepath = public_path('documents/'.$book->document);
+                    return Response::download($filepath);
+                }
+
+
+                $count++;
+                if ($count > $timeout) {
+                    $info = $status->data();
+
+                    $paynowdb = new Paynowlog();
+                    $paynowdb->reference = $info['reference'];
+                    $paynowdb->paynow_reference = $info['paynowreference'];
+                    $paynowdb->amount = $info['amount'];
+                    $paynowdb->status = $info['status'];
+                    $paynowdb->poll_url = $info['pollurl'];
+                    $paynowdb->hash = $info['hash'];
+                    $paynowdb->save();
+
+                    $trans_status = 2;
+                    if($info['status'] != 'sent')
+                    {
+                        $trans_status = 0;
+                    }
+                    //transaction update
+                    $trans = new Transaction();
+                    $trans->user_id = Auth::id();
+                    $trans->book_id = $request->book_id;
+                    $trans->reference = $info['paynowreference'];
+                    $trans->method = "paynow";
+                    $trans->amount = $info['amount'];
+                    $trans->status = $trans_status;
+                    $trans->save();
+
+                    return redirect()->back()->with('error', 'Taking too long wait a moment and refresh');
+                } //endif
+            } //endwhile
+        } //endif
+
+        //total fail
+        return redirect()->back()->with('error', 'Cannot perform transaction at the moment');
     }
 
     public function comment(Request $request)
@@ -160,7 +270,7 @@ class BooksController extends Controller
             $comment->user_id = $request->userid;
             $comment->book_id = $request->bookid;
             $comment->save();
-            return redirect()->back()->with('success', 'liked successfully');
+            return redirect()->back();
         }catch(Exception $e){
             return redirect()->back()->with('error', 'ERROR: '.$e->getMessage());
         }

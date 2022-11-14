@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $books = Book::where('status', 0)->latest()->paginate(10);
+        $books = Book::where('status', 1)->latest()->paginate(10);
         $categories = Category::all();
         return view('author.home', [
             'books' => $books,

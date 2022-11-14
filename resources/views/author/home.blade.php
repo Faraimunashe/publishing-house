@@ -3,6 +3,27 @@
         <!--Grid row-->
         <div class="row">
           <!--Grid column-->
+            <div class="col-md-12">
+                @if (Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+                @if (Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <div class="col-md-9 mb-4">
                 <!--Section: Content-->
                 <section>
@@ -43,13 +64,45 @@
                                             {{ count_downloads($book->id) }}
                                         </a>
                                     </div>
-                                    <a href="{{route('author-read-book', $book->id)}}" class="btn btn-primary">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyBookModal{{ $book->id }}">
                                         <i class="bi bi-download"></i>
                                         ${{$book->price}}
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="buyBookModal{{ $book->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form method="POST" action="{{route('author-download-book')}}">
+                                        @csrf
+                                        <input type="hidden" name="book_id" value="{{ $book->id }}" required>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Buy a copy of {{$book->title}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">Price: </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="price" class="form-control" value="{{ $book->price }}" required disabled>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">Phone: </label>
+                                                <div class="col-sm-10">
+                                                    <input type="tel" name="phone" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Make payment</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- End Edit Modal-->
                     @endforeach
                 </section>
                 <!--Section: Content-->

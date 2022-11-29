@@ -60,8 +60,7 @@
             <div id="intro" class="p-5 text-center bg-light">
                 <h1 class="mb-3 h2">Search Books</h1>
                 <p class="mb-3">search books by author, date & title</p>
-                <form method="GET" action="">
-                    @csrf
+                <form method="GET" action="{{route('author-home')}}">
                     <input type="text" class="form" name="search" required>
                     <button class="btn btn-primary m-2" type="submit">
                         <i class="bi bi-search"></i>

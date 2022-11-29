@@ -38,7 +38,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 });
 
-
 Route::group(['middleware' => ['auth', 'role:author']], function () {
     Route::get('/home', 'App\Http\Controllers\author\HomeController@index')->name('author-home');
 

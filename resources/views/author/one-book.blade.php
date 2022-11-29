@@ -43,6 +43,7 @@
                                     {{book_status($book->status)->label}}
                                 </span>
                             </div>
+                        
 
                             <div class="col-lg-6 text-center text-lg-end">
                                 <form method="POST" action="{{route('author-like')}}">

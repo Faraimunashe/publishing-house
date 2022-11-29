@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/admin/books', 'App\Http\Controllers\publisher\BookController@index')->name('admin-books');
     Route::post('/admin/edit-book', 'App\Http\Controllers\publisher\BookController@change')->name('admin-edit-book');
+    Route::get('/admin/download/{book_id}', 'App\Http\Controllers\publisher\BookController@download')->name('admin-download-book');
 
     Route::get('/admin/authors', 'App\Http\Controllers\publisher\AuthorController@index')->name('admin-authors');
     Route::post('/admin/edit-author', 'App\Http\Controllers\publisher\AuthorController@change')->name('admin-edit-author');

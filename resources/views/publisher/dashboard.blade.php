@@ -95,9 +95,6 @@
                                                     <th scope="col" data-sortable="">
                                                         <a href="#" class="dataTable-sorter">Status</a>
                                                     </th>
-                                                    <th scope="col" data-sortable="">
-                                                        <a href="#" class="dataTable-sorter">Action</a>
-                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -119,14 +116,9 @@
                                                         <td>
                                                             <a href="#" class="text-primary">${{$book->price}}</a>
                                                         </td>
-                                                        <td>{{$book->user_id}}</td>
+                                                        <td>{{get_user($book->user_id)->name}}</td>
                                                         <td>
                                                             <span class="badge bg-{{$status->badge}}">{{$status->label}}</span>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-success btn-sm">
-                                                                option
-                                                            </button>
                                                         </td>
                                                     </tr>
                                                 @endforeach

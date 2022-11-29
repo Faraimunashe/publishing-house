@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use Exception;
 use Illuminate\Http\Request;
+use Response;
 
 class BookController extends Controller
 {
@@ -32,6 +33,7 @@ class BookController extends Controller
 
         try{
             $book->status = $request->status;
+            $book->price = $request->price;
             $book->save();
 
             return redirect()->back()->with('success', 'Successfully updated book status');
@@ -39,6 +41,13 @@ class BookController extends Controller
         {
             return redirect()->back()->with('error', 'ERROR: '.$e->getMessage());
         }
+    }
+
+    public function download($book_id)
+    {
+        $book = Book::find($book_id);
+        $filepath = public_path('documents/'.$book->document);
+        return Response::download($filepath);
     }
 
 }

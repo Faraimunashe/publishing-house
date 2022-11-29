@@ -98,7 +98,7 @@
                                                             <span class="badge bg-{{$status->badge}}">{{$status->label}}</span>
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="text text-purple-700">Download</a>
+                                                            <a href="{{route('admin-download-book', $book->id)}}" class="text text-purple-700">Download</a>
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $book->id }}">
